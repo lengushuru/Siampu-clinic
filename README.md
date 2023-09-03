@@ -77,14 +77,14 @@ For more information on the importance of a professional README for your reposit
 <details>
   <summary>Client</summary>
   <ul>
-    <li><a href="https://rails.org/">Ruby-on-rails</a></li>
+    <li><a href="https://rails.org/">NULL</a></li>
   </ul>
 </details>
 
 <details>
   <summary>Server</summary>
   <ul>
-    <li><a href="https://ruby.com/">Ruby</a></li>
+    <li><a href="https://ruby.com/">Ruby-On-Rails</a></li>
   </ul>
 </details>
 
