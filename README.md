@@ -32,7 +32,7 @@ For more information on the importance of a professional README for your reposit
   <!-- You are encouraged to replace this logo with your own! Otherwise you can also remove it. -->
   <br/>
 
-  <h3><b>Microverse README Template</b></h3>
+  <h3><b>Siampu-clinic API README Template</b></h3>
 
 </div>
 
