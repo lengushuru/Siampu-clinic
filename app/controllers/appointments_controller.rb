@@ -32,7 +32,12 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.new(appointment_params)
 
     if @appointment.save
-      render json: @appointment, status: :created
+      # Send a confirmation email
+      if send_confirmation_email(@appointment.patient.email, @appointment)
+        render json: @appointment, status: :created
+      else
+        render json: { error: 'Failed to send confirmation email' }, status: :internal_server_error
+      end
     else
       render json: @appointment.errors, status: :unprocessable_entity
     end
@@ -55,6 +60,19 @@ class AppointmentsController < ApplicationController
 
   private
 
+  # def set_appointment
+  #   @appointment = Appointment.find(params[:id])
+  # end
+
+  # def appointment_params
+  #   params.require(:appointment).permit(
+  #     :appointment_date,
+  #     :patient_id,
+  #     :doctor_id,
+  #     status: %i[active expire cancel],
+  #     location: %i[street state city zip_code]
+  #   )
+  # end
   def set_appointment
     @appointment = Appointment.find(params[:id])
   end
@@ -64,9 +82,20 @@ class AppointmentsController < ApplicationController
       :appointment_date,
       :patient_id,
       :doctor_id,
-      status: %i[active expire cancel],
-      location: %i[street state city zip_code]
+      :status,
+      :location
     )
+  end
+
+  def send_confirmation_email(to_email, appointment)
+    begin
+      AppointmentMailer.confirmation_email(to_email, appointment).deliver_now
+      
+      return true
+    rescue Exception => e
+      Rails.logger.error("Error sending confirmation email: #{e.message}")
+      return false
+    end
   end
   
 end
